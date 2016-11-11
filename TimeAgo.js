@@ -43,7 +43,7 @@ var TimeAgo = React.createClass({
   },
 
   render() {
-    moment.locale('ko', koLocale);
+    moment.updateLocale('ko', koLocale);
     return (
       <Text {...this.props}>{moment(this.props.time).fromNow(this.props.hideAgo)}</Text>
     );
