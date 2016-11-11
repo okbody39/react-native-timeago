@@ -1,6 +1,7 @@
 var React = require('react')
 var ReactNative = require('react-native');
 var moment = require('moment');
+var koLocale = require('moment/locale/ko');
 var TimerMixin = require('react-timer-mixin');
 
 var { PropTypes } = React;
@@ -42,7 +43,7 @@ var TimeAgo = React.createClass({
   },
 
   render() {
-    moment.locale('ko');
+    moment.locale('ko', koLocale);
     return (
       <Text {...this.props}>{moment(this.props.time).fromNow(this.props.hideAgo)}</Text>
     );
