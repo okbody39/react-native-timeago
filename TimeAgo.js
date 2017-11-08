@@ -3,18 +3,20 @@ var ReactNative = require('react-native');
 var moment = require('moment');
 var koLocale = require('moment/locale/ko');
 var TimerMixin = require('react-timer-mixin');
+import PropTypes from 'prop-types';
+import createReactClass from 'create-react-class';
 
-var { PropTypes } = React;
+// var { PropTypes } = React;
 var { Text } = ReactNative;
 
-var TimeAgo = React.createClass({
+var TimeAgo = createReactClass({
   mixins: [TimerMixin],
   propTypes: {
-    time: React.PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.number,
-      React.PropTypes.array,
-      React.PropTypes.instanceOf(Date)
+    time: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.array,
+      PropTypes.instanceOf(Date)
     ]).isRequired,
     interval: PropTypes.number,
     hideAgo: PropTypes.bool
@@ -43,10 +45,18 @@ var TimeAgo = React.createClass({
   },
 
   render() {
+    var before = moment(this.props.time);
+    var now = moment();
+
     moment.updateLocale('ko', koLocale);
-    return (
-      <Text {...this.props}>{moment(this.props.time).fromNow(this.props.hideAgo)}</Text>
+
+    if( now.diff(before)/(24*60*60*1000) > 1 ) {
+    <Text {...this.props}>{moment(this.props.time).format('YYYY.MM.DD')}</Text>
+    } else {
+      return (
+        <Text {...this.props}>{moment(this.props.time).fromNow(this.props.hideAgo)}</Text>
     );
+    }
   }
 });
 
